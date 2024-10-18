@@ -37,9 +37,12 @@ Date of finished: 18.10.2024
 
 4. Был создан файл inventory.yaml, содержащий информацию об узлах, на которых следует производить настройку
 
-![wg интерфейс](https://github.com/user-attachments/assets/2ee7fbe9-b616-4995-818d-3f3942ca80e4)
+![4](https://github.com/user-attachments/assets/f1998bc2-fc0e-4553-bcba-9107432b1892)
 
 5. Для настройки устройств был создан Ansible плейбук chr-playbook.yaml, который включает в себя следующие указания:
+
+![5](https://github.com/user-attachments/assets/69b645ff-a8cc-4ad0-8825-4585ade25b2c)
+
    - Set logpass: устанавливает пароль "admin" для пользователя admin
    - Configure NTP: включает и настраивает NTP клиента
    - Configure OSPF: настраивает протокол OSPF с указанием Router ID
@@ -48,11 +51,10 @@ Date of finished: 18.10.2024
    - Gather full config: собирает все данные о конфигурации устройства
    - Print full config: выводит данные о конфигурации устройства
 
-![конфиг](https://github.com/user-attachments/assets/3ee9222c-eb77-48c4-a2a4-0993431ab3f4)
 
 6. Выполнение плейбука
 
-![запуск](https://github.com/user-attachments/assets/ace12361-a9c4-4db8-ac99-0b9ca71cbb10)
+![6](https://github.com/user-attachments/assets/7cfac5a4-090f-4d1c-b935-1c9fc3f30c3c)
 
 7. Данные по OSPF топологии
 
@@ -80,14 +82,100 @@ ok: [chr2] => {
 
 8. Полный конфиг устройств
 
-![wg адрес](https://github.com/user-attachments/assets/5b4c387e-79fe-468e-93f2-aa590e31aee1)
+```bash
+TASK [Print full config] ********************************************************************************************************************************************************************
+ok: [chr1] => {
+    "full_config.stdout_lines": [
+        [
+            "# 2024-10-18 17:40:47 by RouterOS 7.15.3",
+            "# software id = ",
+            "#",
+            "/disk",
+            "set slot1 media-interface=none media-sharing=no slot=slot1",
+            "set slot2 media-interface=none media-sharing=no slot=slot2",
+            "set slot3 media-interface=none media-sharing=no slot=slot3",
+            "set slot4 media-interface=none media-sharing=no slot=slot4",
+            "set slot5 media-interface=none media-sharing=no slot=slot5",
+            "set slot6 media-interface=none media-sharing=no slot=slot6",
+            "set slot7 media-interface=none media-sharing=no slot=slot7",
+            "set slot8 media-interface=none media-sharing=no slot=slot8",
+            "set slot9 media-interface=none media-sharing=no slot=slot9",
+            "/interface bridge",
+            "add name=loopback",
+            "/interface wireguard",
+            "add listen-port=49734 mtu=1420 name=wg-client",
+            "/routing ospf instance",
+            "add disabled=no name=default router-id=1.1.1.1",
+            "/routing ospf area",
+            "add disabled=no instance=default name=backbone",
+            "/interface wireguard peers",
+            "add allowed-address=10.66.66.0/24 endpoint-address=172.20.10.8 endpoint-port=\\",
+            "    49734 interface=wg-client name=peer1 public-key=\\",
+            "    \"aWZIbC92ZFA5FEBr46op6vokBnkbQq5MVWT+s+H18kk=\"",
+            "/ip address",
+            "add address=10.66.66.2/24 interface=wg-client network=10.66.66.0",
+            "add address=1.1.1.1 interface=loopback network=1.1.1.1",
+            "/ip dhcp-client",
+            "add interface=ether1",
+            "/ip firewall filter",
+            "add action=accept chain=input dst-port=49734 protocol=udp src-address=\\",
+            "    172.20.10.5",
+            "/ip route",
+            "add disabled=no distance=1 dst-address=10.66.66.1/32 gateway=wg-client \\",
+            "    routing-table=main scope=30 suppress-hw-offload=no target-scope=10",
+            "/routing ospf interface-template",
+            "add area=backbone disabled=no interfaces=ether1 type=ptp",
+            "add area=backbone disabled=no interfaces=ether1 type=ptp",
+            "/system note",
+            "set show-at-login=no",
+            "/system ntp client",
+            "set enabled=yes",
+            "/system ntp client servers",
+            "add address=194.190.168.1"
+        ]
+    ]
+}
+ok: [chr2] => {
+    "full_config.stdout_lines": [
+        [
+            "# 2024-10-18 17:40:47 by RouterOS 7.16.1",
+            "# software id = ",
+            "#",
+            "/interface bridge",
+            "add name=loopback",
+            "/interface wireguard",
+            "add listen-port=49734 mtu=1420 name=wg-client",
+            "/routing ospf instance",
+            "add disabled=no name=default router-id=2.2.2.2",
+            "/routing ospf area",
+            "add disabled=no instance=default name=backbone",
+            "/interface wireguard peers",
+            "add allowed-address=10.66.66.0/24 endpoint-address=172.20.10.8 endpoint-port=\\",
+            "    49734 interface=wg-client name=peer1 public-key=\\",
+            "    \"aWZIbC92ZFA5FEBr46op6vokBnkbQq5MVWT+s+H18kk=\"",
+            "/ip address",
+            "add address=10.66.66.3/24 interface=wg-client network=10.66.66.0",
+            "add address=2.2.2.2 interface=loopback network=2.2.2.2",
+            "/ip dhcp-client",
+            "add interface=ether1",
+            "/ip route",
+            "add disabled=no dst-address=10.66.66.1/32 gateway=wg-client routing-table=\\",
+            "    main suppress-hw-offload=no",
+            "/routing ospf interface-template",
+            "add area=backbone disabled=no interfaces=ether1 type=ptp",
+            "add area=backbone disabled=no interfaces=ether1 type=ptp",
+            "/system note",
+            "set show-at-login=no",
+            "/system ntp client",
+            "set enabled=yes",
+            "/system ntp client servers",
+            "add address=194.190.168.1"
+        ]
+    ]
+}
 
-## Результат
+```
+## Схема связи
 
-Проверка доступности сервера
+![topology (2)](https://github.com/user-attachments/assets/68b0f80f-73b9-4ff3-96c3-4757bddcaba0)
 
-![пинг сервера](https://github.com/user-attachments/assets/3e8a2659-21b8-422a-96a1-f329c3825791)
-
-Проверка доступности клиента
-
-![пинг клиента](https://github.com/user-attachments/assets/a87c4a1a-8915-42cd-a5ac-18dd6eab1d75)

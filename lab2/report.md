@@ -25,23 +25,23 @@ Date of finished: 18.10.2024
 
 1. В VirtualBox был создан второй CHR
  
-![1](https://github.com/user-attachments/assets/ee41fa42-d199-4788-afb8-1c3cf7b3c965)
+![1](./assets/1.jpg)
 
 2. На созданном роутере CHR2 был настроен Wireguard интерфейс
 
-![2](https://github.com/user-attachments/assets/7ac31a05-0566-4958-b5c6-2b8b0ef05928)
+![2](./assets/2.jpg)
 
 3. На сервере в файл wg0.conf была добавлена информация о новом клиенте с адресом 10.66.66.3. Проверка доступности сервера со второго CHR:
 
-![3](https://github.com/user-attachments/assets/a0601346-47b7-4b48-bbeb-f9614d007975)
+![3](./assets/3.jpg)
 
-4. Был создан файл inventory.yaml, содержащий информацию об узлах, на которых следует производить настройку
+4. Был создан файл [inventory.yaml](./assets/inventory.yaml), содержащий информацию об узлах, на которых следует производить настройку
 
-![4](https://github.com/user-attachments/assets/f1998bc2-fc0e-4553-bcba-9107432b1892)
+![4](./assets/4.jpg)
 
-5. Для настройки устройств был создан Ansible плейбук chr-playbook.yaml, который включает в себя следующие указания:
+5. Для настройки устройств был создан Ansible плейбук [chr_playbook.yaml](./assets/chr_playbook.yaml), который включает в себя следующие указания:
 
-![5](https://github.com/user-attachments/assets/69b645ff-a8cc-4ad0-8825-4585ade25b2c)
+![5](./assets/5.jpg)
 
    - Set logpass: устанавливает пароль "admin" для пользователя admin
    - Configure NTP: включает и настраивает NTP клиента
@@ -54,7 +54,7 @@ Date of finished: 18.10.2024
 
 6. Выполнение плейбука
 
-![6](https://github.com/user-attachments/assets/7cfac5a4-090f-4d1c-b935-1c9fc3f30c3c)
+![6](./assets/6.jpg)
 
 7. Данные по OSPF топологии
 

@@ -12,9 +12,9 @@ Author: Shalyapina Maria Vasilievna
 
 Lab: Lab2
 
-Date of create: 18.10.2024
+Date of create: 21.11.2024
 
-Date of finished: 18.10.2024
+Date of finished: 22.11.2024
 
 # Лабораторная работа №3 "Развертывание Netbox, сеть связи как источник правды в системе технического учета Netbox"
 
@@ -192,12 +192,69 @@ all:
 
 ![14](./assets/14.jpg)
 
+### Добавление серийного номера в NetBox
+
+Сперва собираем информацию о серийном номере устройства командой ```bash /system license print ```. Затем выполняем PATCH-запрос, чтобы обновить серийный номер устройства в Netbox.
+
+[Плейбук](./assets/add_serial_number.yaml) для добавления серийного номера в NetBox:
+
+<details>
+<summary>Показать код</summary>
+  
+```yaml
+---
+- name: CHR
+  hosts: chr_host
+  gather_facts: false
+
+  tasks:
+    - name: Get Serial Number
+      community.routeros.command:
+        commands:
+          - /system license print
+      register: serial_output
+
+    - name: Parse Output
+      set_fact:
+        serial_number: "{{ serial_output.stdout_lines[0][0] | regex_search('system-id: (\\S+)','\\1') }}"
+
+    - name: Parse Output
+      debug:
+        var: serial_number
 
 
+- name: NetBox
+  hosts: localhost
+  gather_facts: false
+  vars:
+   netbox_url: "https://10.0.2.15:443"
+   netbox_token: "b0e1baf3819699b9f81b68096e13a811377f8f7a"
+
+  tasks:
+    - name: Update Serial Number in NetBox
+      uri:
+        url: "{{ netbox_url }}/api/dcim/devices/2/"
+        method: PATCH
+        headers:
+          Authorization: "Token {{ netbox_token }}"
+          Content-Type: "application/json"
+        body:
+          serial: "{{ hostvars['chr_host'].serial_number[0] | string }}"
+        body_format: json
+        validate_certs: no
+      register: update_response
+```
+
+</details>
+
+Успешное выполнение плейбука:
+
+![15](./assets/15.jpg)
 
 
+Обновленный серийный номер в NetBox:
 
-
+![16](./assets/16.jpg)
 
 
 

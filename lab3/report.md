@@ -118,7 +118,7 @@ ansible-playbook -i inventory.yaml playbook.yaml
 
 ![9](./assets/9.jpg)
 
-Получили файл [netbox_devices.json](./assets/netbox_devices.json), содержащий собранную информацию об устройствах
+Получили файл [netbox_devices.json](./result/netbox_devices.json), содержащий собранную информацию об устройствах
 
 ### Изменение имени устройства и добавление IP-адреса
 
@@ -135,7 +135,7 @@ all:
       ansible_network_os: community.routeros.routeros
       ansible_ssh_private_key_file: /root/.ssh/id_rsa
 ```
-[Плейбук](./assets/configure_chr.yaml) для изменения настроек роутера в соответствии с данными из NetBox:
+[Плейбук](./result/configure_chr.yaml) для изменения настроек роутера в соответствии с данными из NetBox:
 
 <details>
 <summary>Показать код</summary>
@@ -196,7 +196,7 @@ all:
 
 Сперва собираем информацию о серийном номере устройства командой ```bash /system license print ```. Затем выполняем PATCH-запрос, чтобы обновить серийный номер устройства в Netbox.
 
-[Плейбук](./assets/add_serial_number.yaml) для добавления серийного номера в NetBox:
+[Плейбук](./result/add_serial_number.yaml) для добавления серийного номера в NetBox:
 
 <details>
 <summary>Показать код</summary>

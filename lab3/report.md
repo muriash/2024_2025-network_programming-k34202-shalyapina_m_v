@@ -26,15 +26,15 @@ Date of finished: 18.10.2024
 ### Установка NetBox
 PostgreSQL нужен для работы NetBox как основная реляционная база данных. Он используется для хранения всей структурированной информации
 
-...
+![1](./assets/1.jpg)
 
 Redis в NetBox выполняет три ключевые функции: кэширование данных, асинхронная обработка задач и управление пользовательскими сессиями
 
-...
+![2](./assets/2.jpg)
 
 Клонируем репозиторий NetBox
 
-...
+![3](./assets/3.jpg)
 
 Создаем виртуальное окружение, устанавливаем необходимые зависимости и настраиваем конфигурационный файл configuration.py (копируем содержимое файла configuration_example.py), генерируем секретный ключ.
 
@@ -57,17 +57,17 @@ python3 manage.py createsuperuser
 Устанавливаем Gunicorn - это WSGI-сервер, который запускает Python-приложение NetBox и обрабатывает запросы, и Nginx - веб-сервер, который используется как обратный прокси для Gunicorn.
 После этого запускам netbox и nginx
 
-...
+![7](./assets/7.jpg)
 
 Пробрасываем нужные порты в VirtualBox, открываем браузер и переходим по ссылке https://localhost:8000
 
-...
+![6](./assets/6.jpg)
 
 ### Добавление информации об устройствах
 
 Во вкладке "Устройства" была внесена информация о двух роутерах R1 и R2 (роль, производитель, тип, IP-адрес)
 
-...
+![8](./assets/8.jpg)
 
 ### Сохранение данных из NetBox в файл
 
@@ -116,9 +116,82 @@ Ansible плейбук playbook.yaml:
 ansible-playbook -i inventory.yaml playbook.yaml
 ```
 
-...
+![9](./assets/9.jpg)
 
-Получили файл netbox_devices.json, содержащий собранную информацию об устройствах
+Получили файл [netbox_devices.json](./assets/netbox_devices.json), содержащий собранную информацию об устройствах
+
+### Изменение имени устройства и добавление IP-адреса
+
+Файл inventory.yaml:
+```yaml
+all:
+  hosts:
+    localhost:
+      ansible_connection: local
+    chr_host:
+      ansible_host: 192.168.56.107
+      ansible_user: admin
+      ansible_connection: ansible.netcommon.network_cli
+      ansible_network_os: community.routeros.routeros
+      ansible_ssh_private_key_file: /root/.ssh/id_rsa
+```
+[Плейбук](./assets/configure_chr.yaml) для изменения настроек роутера в соответствии с данными из NetBox:
+
+<details>
+<summary>Показать код</summary>
+  
+```yaml
+---
+- name: Fetch Info from NetBox
+  hosts: localhost
+  gather_facts: false
+  vars:
+   netbox_url: "https://10.0.2.15:443"
+   netbox_token: "b0e1baf3819699b9f81b68096e13a811377f8f7a"
+
+  tasks:
+    - name: Fetch Info
+      uri:
+        url: "{{ netbox_url }}/api/dcim/devices"
+        headers:
+          Authorization: "Token {{ netbox_token }}"
+        method: GET
+        return_content: yes
+        validate_certs: false
+      register: device_data
+
+    - name: Export Name and IP Address
+      set_fact:
+        device_name: "{{ device_data.json.results[1].name }}"
+        netbox_ip_address: "{{ device_data.json.results[1].primary_ip.address }}"
+
+- name: Configure CHR
+  hosts: chr_host
+  gather_facts: false
+
+  tasks:
+    - name: Change Name
+      community.routeros.command:
+        commands:
+          - /system identity set name={{ hostvars['localhost'].device_name }}
+
+    - name: Add IP address
+      community.routeros.command:
+        commands:
+          - /ip address add address={{ hostvars['localhost'].netbox_ip_address }} interface=netbox disabled=no
+```
+</details>
+
+После выполнения плейбука, проверяем изменения на роутере:
+
+Изменение имени устройства с MikroTik на R2
+
+![11](./assets/11.jpg)
+
+Добавление IP-адреса 192.168.0.105/24
+
+![14](./assets/14.jpg)
+
 
 
 

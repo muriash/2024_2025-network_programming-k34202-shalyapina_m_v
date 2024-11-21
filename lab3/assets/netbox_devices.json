@@ -1,0 +1,211 @@
+{
+    "count": 2,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "airflow": null,
+            "asset_tag": null,
+            "cluster": null,
+            "comments": "",
+            "config_context": {},
+            "config_template": null,
+            "console_port_count": 0,
+            "console_server_port_count": 0,
+            "created": "2024-11-21T09:27:29.600236Z",
+            "custom_fields": {},
+            "description": "",
+            "device_bay_count": 0,
+            "device_type": {
+                "description": "",
+                "display": "RouterOS",
+                "id": 1,
+                "manufacturer": {
+                    "description": "",
+                    "display": "Mikrotik",
+                    "id": 1,
+                    "name": "Mikrotik",
+                    "slug": "mikrotik",
+                    "url": "https://10.0.2.15:443/api/dcim/manufacturers/1/"
+                },
+                "model": "RouterOS",
+                "slug": "routeros",
+                "url": "https://10.0.2.15:443/api/dcim/device-types/1/"
+            },
+            "display": "R1",
+            "display_url": "https://10.0.2.15:443/dcim/devices/1/",
+            "face": null,
+            "front_port_count": 0,
+            "id": 1,
+            "interface_count": 3,
+            "inventory_item_count": 0,
+            "last_updated": "2024-11-21T09:41:17.674965Z",
+            "latitude": null,
+            "local_context_data": null,
+            "location": null,
+            "longitude": null,
+            "module_bay_count": 0,
+            "name": "R1",
+            "oob_ip": null,
+            "parent_device": null,
+            "platform": null,
+            "position": null,
+            "power_outlet_count": 0,
+            "power_port_count": 0,
+            "primary_ip": {
+                "address": "172.20.10.5/28",
+                "description": "",
+                "display": "172.20.10.5/28",
+                "family": {
+                    "label": "IPv4",
+                    "value": 4
+                },
+                "id": 1,
+                "url": "https://10.0.2.15:443/api/ipam/ip-addresses/1/"
+            },
+            "primary_ip4": {
+                "address": "172.20.10.5/28",
+                "description": "",
+                "display": "172.20.10.5/28",
+                "family": {
+                    "label": "IPv4",
+                    "value": 4
+                },
+                "id": 1,
+                "url": "https://10.0.2.15:443/api/ipam/ip-addresses/1/"
+            },
+            "primary_ip6": null,
+            "rack": null,
+            "rear_port_count": 0,
+            "role": {
+                "description": "",
+                "display": "Router",
+                "id": 1,
+                "name": "Router",
+                "slug": "router",
+                "url": "https://10.0.2.15:443/api/dcim/device-roles/1/"
+            },
+            "serial": "",
+            "site": {
+                "description": "",
+                "display": "mrsh",
+                "id": 1,
+                "name": "mrsh",
+                "slug": "mrsh",
+                "url": "https://10.0.2.15:443/api/dcim/sites/1/"
+            },
+            "status": {
+                "label": "Active",
+                "value": "active"
+            },
+            "tags": [],
+            "tenant": null,
+            "url": "https://10.0.2.15:443/api/dcim/devices/1/",
+            "vc_position": null,
+            "vc_priority": null,
+            "virtual_chassis": null
+        },
+        {
+            "airflow": null,
+            "asset_tag": null,
+            "cluster": null,
+            "comments": "",
+            "config_context": {},
+            "config_template": null,
+            "console_port_count": 0,
+            "console_server_port_count": 0,
+            "created": "2024-11-21T09:27:48.886001Z",
+            "custom_fields": {},
+            "description": "",
+            "device_bay_count": 0,
+            "device_type": {
+                "description": "",
+                "display": "RouterOS",
+                "id": 1,
+                "manufacturer": {
+                    "description": "",
+                    "display": "Mikrotik",
+                    "id": 1,
+                    "name": "Mikrotik",
+                    "slug": "mikrotik",
+                    "url": "https://10.0.2.15:443/api/dcim/manufacturers/1/"
+                },
+                "model": "RouterOS",
+                "slug": "routeros",
+                "url": "https://10.0.2.15:443/api/dcim/device-types/1/"
+            },
+            "display": "R2",
+            "display_url": "https://10.0.2.15:443/dcim/devices/2/",
+            "face": null,
+            "front_port_count": 0,
+            "id": 2,
+            "interface_count": 3,
+            "inventory_item_count": 0,
+            "last_updated": "2024-11-21T09:41:31.406915Z",
+            "latitude": null,
+            "local_context_data": null,
+            "location": null,
+            "longitude": null,
+            "module_bay_count": 0,
+            "name": "R2",
+            "oob_ip": null,
+            "parent_device": null,
+            "platform": null,
+            "position": null,
+            "power_outlet_count": 0,
+            "power_port_count": 0,
+            "primary_ip": {
+                "address": "172.20.10.2/28",
+                "description": "",
+                "display": "172.20.10.2/28",
+                "family": {
+                    "label": "IPv4",
+                    "value": 4
+                },
+                "id": 2,
+                "url": "https://10.0.2.15:443/api/ipam/ip-addresses/2/"
+            },
+            "primary_ip4": {
+                "address": "172.20.10.2/28",
+                "description": "",
+                "display": "172.20.10.2/28",
+                "family": {
+                    "label": "IPv4",
+                    "value": 4
+                },
+                "id": 2,
+                "url": "https://10.0.2.15:443/api/ipam/ip-addresses/2/"
+            },
+            "primary_ip6": null,
+            "rack": null,
+            "rear_port_count": 0,
+            "role": {
+                "description": "",
+                "display": "Router",
+                "id": 1,
+                "name": "Router",
+                "slug": "router",
+                "url": "https://10.0.2.15:443/api/dcim/device-roles/1/"
+            },
+            "serial": "",
+            "site": {
+                "description": "",
+                "display": "mrsh",
+                "id": 1,
+                "name": "mrsh",
+                "slug": "mrsh",
+                "url": "https://10.0.2.15:443/api/dcim/sites/1/"
+            },
+            "status": {
+                "label": "Active",
+                "value": "active"
+            },
+            "tags": [],
+            "tenant": null,
+            "url": "https://10.0.2.15:443/api/dcim/devices/2/",
+            "vc_position": null,
+            "vc_priority": null,
+            "virtual_chassis": null
+        }
+    ]
+}

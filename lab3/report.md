@@ -10,7 +10,7 @@ Group: K34202
 
 Author: Shalyapina Maria Vasilievna
 
-Lab: Lab2
+Lab: Lab3
 
 Date of create: 21.11.2024
 
